@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -13,7 +17,7 @@ body {
 $width-cell: 100px;
 $padding: 10px;
 $gap: 1px;
-$max-width: calc(#{$width-cell} * 7 + #{$padding} * 2 + #{$gap} * 6);
+$max-width: calc(#{$width-cell} * 7 + #{$padding} * 2 + #{$gap} * 7);
 $week-days: (
   'sun': (
     ($width-cell + $gap) * 0,
@@ -52,14 +56,14 @@ $week-days: (
       }
 
       .calendar__cell:first-child {
-        margin-left: calc($max-width - $width-cell - $padding * 2);
+        margin-left: calc($max-width - $width-cell - $padding * 2 - $gap);
       }
     }
   }
 
   @for $d from 28 through 31 {
     &--month-length-#{$d} {
-      .calendar__cell:last-child::before {
+      .calendar__cell:nth-last-child(1)::before {
         content: '#{$d}';
       }
     }
