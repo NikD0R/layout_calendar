@@ -13,8 +13,8 @@ body {
 $width-cell: 100px;
 $padding: 10px;
 $gap: 1px;
-$max-width: calc(#{$width-cell} * 7 + #{$padding} + #{$gap} );
-$week-days: 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat';
+$max-width: calc(#{$width-cell} * 7 + #{$padding} * 2 + #{$gap} * 6);
+$week-days: ('sun': ($width-cell + $gap) * 0, 'mon': ($width-cell + $gap) * 1, 'tue': ($width-cell + $gap) * 2, 'wed': ($width-cell + $gap) * 3, 'thu': ($width-cell + $gap) * 4, 'fri': ($width-cell + $gap) * 5, 'sat': ($width-cell + $gap) * 6);
 
 .calendar {
   display: flex;
@@ -23,10 +23,10 @@ $week-days: 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat';
   padding: $padding;
   max-width: $max-width;
 
-  @each $week-day in $week-days {
+  @each $week-day, $value in $week-days {
     &--start-day-#{$week-day} {
-      .calendar__cell:first-child {
-        margin-left: calc(#{$max-width } - #{$width-cell});
+      .calendar__cell:nth-child(n) {
+        margin-left: $value;
       }
     }
   }
@@ -52,10 +52,14 @@ $week-days: 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat';
     transition-duration: 0.5s;
 
     @for $i from 1 through 31 {
-      &--#{$i}::before {
+      &:nth-child(#{$i})::before {
         content: '#{$i}';
         position: absolute;
       }
+    }
+
+    &:first-child {
+      margin-left: calc($max-width - $width-cell - $padding * 2);
     }
 
     &:hover {
